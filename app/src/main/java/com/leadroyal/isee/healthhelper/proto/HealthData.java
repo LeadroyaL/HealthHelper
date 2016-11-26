@@ -19,31 +19,14 @@ public final class HealthData {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required int32 xueyang = 1;</code>
-     */
-    boolean hasXueyang();
-    /**
-     * <code>required int32 xueyang = 1;</code>
+     * <code>optional int32 xueyang = 1;</code>
      */
     int getXueyang();
 
     /**
-     * <code>required int32 xinlv = 2;</code>
-     */
-    boolean hasXinlv();
-    /**
-     * <code>required int32 xinlv = 2;</code>
+     * <code>optional int32 xinlv = 2;</code>
      */
     int getXinlv();
-
-    /**
-     * <code>required int64 time = 3;</code>
-     */
-    boolean hasTime();
-    /**
-     * <code>required int64 time = 3;</code>
-     */
-    long getTime();
   }
   /**
    * Protobuf type {@code healthhelper.Body}
@@ -59,13 +42,12 @@ public final class HealthData {
     private Body() {
       xueyang_ = 0;
       xinlv_ = 0;
-      time_ = 0L;
     }
 
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
-      return this.unknownFields;
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
     private Body(
         com.google.protobuf.CodedInputStream input,
@@ -73,8 +55,6 @@ public final class HealthData {
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -84,25 +64,19 @@ public final class HealthData {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
+              if (!input.skipField(tag)) {
                 done = true;
               }
               break;
             }
             case 8: {
-              bitField0_ |= 0x00000001;
+
               xueyang_ = input.readInt32();
               break;
             }
             case 16: {
-              bitField0_ |= 0x00000002;
+
               xinlv_ = input.readInt32();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              time_ = input.readInt64();
               break;
             }
           }
@@ -113,7 +87,6 @@ public final class HealthData {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
@@ -129,17 +102,10 @@ public final class HealthData {
               com.leadroyal.isee.healthhelper.proto.HealthData.Body.class, com.leadroyal.isee.healthhelper.proto.HealthData.Body.Builder.class);
     }
 
-    private int bitField0_;
     public static final int XUEYANG_FIELD_NUMBER = 1;
     private int xueyang_;
     /**
-     * <code>required int32 xueyang = 1;</code>
-     */
-    public boolean hasXueyang() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>required int32 xueyang = 1;</code>
+     * <code>optional int32 xueyang = 1;</code>
      */
     public int getXueyang() {
       return xueyang_;
@@ -148,31 +114,10 @@ public final class HealthData {
     public static final int XINLV_FIELD_NUMBER = 2;
     private int xinlv_;
     /**
-     * <code>required int32 xinlv = 2;</code>
-     */
-    public boolean hasXinlv() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required int32 xinlv = 2;</code>
+     * <code>optional int32 xinlv = 2;</code>
      */
     public int getXinlv() {
       return xinlv_;
-    }
-
-    public static final int TIME_FIELD_NUMBER = 3;
-    private long time_;
-    /**
-     * <code>required int64 time = 3;</code>
-     */
-    public boolean hasTime() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required int64 time = 3;</code>
-     */
-    public long getTime() {
-      return time_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -181,34 +126,18 @@ public final class HealthData {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasXueyang()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasXinlv()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasTime()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (xueyang_ != 0) {
         output.writeInt32(1, xueyang_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (xinlv_ != 0) {
         output.writeInt32(2, xinlv_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt64(3, time_);
-      }
-      unknownFields.writeTo(output);
     }
 
     public int getSerializedSize() {
@@ -216,19 +145,14 @@ public final class HealthData {
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (xueyang_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, xueyang_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (xinlv_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, xinlv_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, time_);
-      }
-      size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -245,22 +169,10 @@ public final class HealthData {
       com.leadroyal.isee.healthhelper.proto.HealthData.Body other = (com.leadroyal.isee.healthhelper.proto.HealthData.Body) obj;
 
       boolean result = true;
-      result = result && (hasXueyang() == other.hasXueyang());
-      if (hasXueyang()) {
-        result = result && (getXueyang()
-            == other.getXueyang());
-      }
-      result = result && (hasXinlv() == other.hasXinlv());
-      if (hasXinlv()) {
-        result = result && (getXinlv()
-            == other.getXinlv());
-      }
-      result = result && (hasTime() == other.hasTime());
-      if (hasTime()) {
-        result = result && (getTime()
-            == other.getTime());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
+      result = result && (getXueyang()
+          == other.getXueyang());
+      result = result && (getXinlv()
+          == other.getXinlv());
       return result;
     }
 
@@ -271,19 +183,10 @@ public final class HealthData {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
-      if (hasXueyang()) {
-        hash = (37 * hash) + XUEYANG_FIELD_NUMBER;
-        hash = (53 * hash) + getXueyang();
-      }
-      if (hasXinlv()) {
-        hash = (37 * hash) + XINLV_FIELD_NUMBER;
-        hash = (53 * hash) + getXinlv();
-      }
-      if (hasTime()) {
-        hash = (37 * hash) + TIME_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getTime());
-      }
+      hash = (37 * hash) + XUEYANG_FIELD_NUMBER;
+      hash = (53 * hash) + getXueyang();
+      hash = (37 * hash) + XINLV_FIELD_NUMBER;
+      hash = (53 * hash) + getXinlv();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -403,11 +306,9 @@ public final class HealthData {
       public Builder clear() {
         super.clear();
         xueyang_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
+
         xinlv_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        time_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000004);
+
         return this;
       }
 
@@ -430,21 +331,8 @@ public final class HealthData {
 
       public com.leadroyal.isee.healthhelper.proto.HealthData.Body buildPartial() {
         com.leadroyal.isee.healthhelper.proto.HealthData.Body result = new com.leadroyal.isee.healthhelper.proto.HealthData.Body(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
         result.xueyang_ = xueyang_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
         result.xinlv_ = xinlv_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.time_ = time_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -486,30 +374,17 @@ public final class HealthData {
 
       public Builder mergeFrom(com.leadroyal.isee.healthhelper.proto.HealthData.Body other) {
         if (other == com.leadroyal.isee.healthhelper.proto.HealthData.Body.getDefaultInstance()) return this;
-        if (other.hasXueyang()) {
+        if (other.getXueyang() != 0) {
           setXueyang(other.getXueyang());
         }
-        if (other.hasXinlv()) {
+        if (other.getXinlv() != 0) {
           setXinlv(other.getXinlv());
         }
-        if (other.hasTime()) {
-          setTime(other.getTime());
-        }
-        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!hasXueyang()) {
-          return false;
-        }
-        if (!hasXinlv()) {
-          return false;
-        }
-        if (!hasTime()) {
-          return false;
-        }
         return true;
       }
 
@@ -530,35 +405,28 @@ public final class HealthData {
         }
         return this;
       }
-      private int bitField0_;
 
       private int xueyang_ ;
       /**
-       * <code>required int32 xueyang = 1;</code>
-       */
-      public boolean hasXueyang() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>required int32 xueyang = 1;</code>
+       * <code>optional int32 xueyang = 1;</code>
        */
       public int getXueyang() {
         return xueyang_;
       }
       /**
-       * <code>required int32 xueyang = 1;</code>
+       * <code>optional int32 xueyang = 1;</code>
        */
       public Builder setXueyang(int value) {
-        bitField0_ |= 0x00000001;
+        
         xueyang_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int32 xueyang = 1;</code>
+       * <code>optional int32 xueyang = 1;</code>
        */
       public Builder clearXueyang() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        
         xueyang_ = 0;
         onChanged();
         return this;
@@ -566,75 +434,37 @@ public final class HealthData {
 
       private int xinlv_ ;
       /**
-       * <code>required int32 xinlv = 2;</code>
-       */
-      public boolean hasXinlv() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required int32 xinlv = 2;</code>
+       * <code>optional int32 xinlv = 2;</code>
        */
       public int getXinlv() {
         return xinlv_;
       }
       /**
-       * <code>required int32 xinlv = 2;</code>
+       * <code>optional int32 xinlv = 2;</code>
        */
       public Builder setXinlv(int value) {
-        bitField0_ |= 0x00000002;
+        
         xinlv_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int32 xinlv = 2;</code>
+       * <code>optional int32 xinlv = 2;</code>
        */
       public Builder clearXinlv() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        
         xinlv_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private long time_ ;
-      /**
-       * <code>required int64 time = 3;</code>
-       */
-      public boolean hasTime() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required int64 time = 3;</code>
-       */
-      public long getTime() {
-        return time_;
-      }
-      /**
-       * <code>required int64 time = 3;</code>
-       */
-      public Builder setTime(long value) {
-        bitField0_ |= 0x00000004;
-        time_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int64 time = 3;</code>
-       */
-      public Builder clearTime() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        time_ = 0L;
         onChanged();
         return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
+        return this;
       }
 
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
+        return this;
       }
 
 
@@ -651,7 +481,7 @@ public final class HealthData {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<Body>
+    private static final com.google.protobuf.Parser<Body>
         PARSER = new com.google.protobuf.AbstractParser<Body>() {
       public Body parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
@@ -691,9 +521,9 @@ public final class HealthData {
   static {
     java.lang.String[] descriptorData = {
       "\n\034proto/healthhelper/msg.proto\022\014healthhe" +
-      "lper\"4\n\004Body\022\017\n\007xueyang\030\001 \002(\005\022\r\n\005xinlv\030\002" +
-      " \002(\005\022\014\n\004time\030\003 \002(\003B3\n%com.leadroyal.isee" +
-      ".healthhelper.protoB\nHealthData"
+      "lper\"&\n\004Body\022\017\n\007xueyang\030\001 \001(\005\022\r\n\005xinlv\030\002" +
+      " \001(\005B3\n%com.leadroyal.isee.healthhelper." +
+      "protoB\nHealthDatab\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -712,7 +542,7 @@ public final class HealthData {
     internal_static_healthhelper_Body_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_healthhelper_Body_descriptor,
-        new java.lang.String[] { "Xueyang", "Xinlv", "Time", });
+        new java.lang.String[] { "Xueyang", "Xinlv", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

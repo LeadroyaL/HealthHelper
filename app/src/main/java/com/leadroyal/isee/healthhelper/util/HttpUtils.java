@@ -47,10 +47,11 @@ public class HttpUtils {
     public static void uploadData(String uploadString) {
         String xinlv = uploadString.split(" ")[0];
         String xueyang = uploadString.split(" ")[1];
-        HealthData.Body body = HealthData.Body.newBuilder().setTime(new Date().getTime()).setXinlv(Integer.valueOf(xinlv)).setXueyang(Integer.valueOf(xueyang)).build();
+        HealthData.Body body = HealthData.Body.newBuilder().setXinlv(Integer.valueOf(xinlv)).setXueyang(Integer.valueOf(xueyang)).build();
         byte[] bytes = body.toByteArray();
         Log.d("TAG", Arrays.toString(bytes));
 //        TODO waiting for server
+//        send deviceID = ID data = hexString
         Message msg = Message.obtain();
         msg.what = MainActivity.MSG_OK;
         MainActivity.handler.sendMessage(msg);
@@ -58,6 +59,7 @@ public class HttpUtils {
 
     public static void downloadData() {
 //        TODO waiting for server
+//        send deviceID = ID
         client.get("http://www.bing.com", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

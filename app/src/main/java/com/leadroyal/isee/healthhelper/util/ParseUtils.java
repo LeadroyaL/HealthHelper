@@ -22,7 +22,7 @@ public class ParseUtils {
         if (inputStream.available() > 0) {
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
-            return String.valueOf(buffer);
+            return new String(buffer);
         }
         return null;
     }

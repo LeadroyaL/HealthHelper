@@ -7,5 +7,4 @@ option java_outer_classname = "HealthData";
 message Body {
     int32 xueyang = 1;
     int32 xinlv = 2;
-    int64 time = 3;
 }
