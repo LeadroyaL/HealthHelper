@@ -52,7 +52,6 @@ public class ShowResultActivity extends AppCompatActivity {
                     case MSG_OK:
                         String s = (String) msg.obj;
                         webview.loadData(s, "text/html", "UTF-8");
-                        ToastUtils.show(context, "parse data success!");
                         break;
                     case MSG_FAIL:
                         ToastUtils.show(context, "download data fail! please check your network");

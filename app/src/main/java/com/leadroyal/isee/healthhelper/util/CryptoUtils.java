@@ -34,9 +34,6 @@ public class CryptoUtils {
         }
     }
 
-    public static void setAESKey(String s) {
-        setAESKey(s.getBytes());
-    }
 
     public static void setAESKey(byte[] bytes) {
         AESKey = new SecretKeySpec(bytes, "AES");

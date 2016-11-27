@@ -21,7 +21,6 @@ import com.leadroyal.isee.healthhelper.util.ToastUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.Format;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int MSG_AES_KEY = 0;
     public static final int MSG_OK = 1;
     public static final int MSG_FAIL = 2;
-    public static final int MSG_UPLOAD = 3;
+    public static final int MSG_UPLOAD_FAIL = 3;
     public static Handler handler;
     private BluetoothDevice device;
     private BluetoothSocket socket;
@@ -60,24 +59,20 @@ public class MainActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case MSG_AES_KEY:
                         Log.d("handle", "receive AES success!");
-                        String s = (String) msg.obj;
-                        if (s.length() == 16) {
+                        byte[] s = (byte[]) msg.obj;
+                        if (s.length == 32) {
                             CryptoUtils.setAESKey(s);
-                            handler.sendMessage(getUploadMsg());
                         } else
                             ToastUtils.show(context, "receive error AES key");
                         break;
                     case MSG_OK:
-                        Log.d("handle", "upload ok");
+                        Log.d("handle", "message ok");
                         break;
                     case MSG_FAIL:
-                        //TODO delete it
-                        handler.sendMessage(getUploadMsg());
-                        ToastUtils.show(context, "upload data fail! please check your network");
+                        ToastUtils.show(context, "please check your network");
                         break;
-                    case MSG_UPLOAD:
-                        HttpUtils.uploadData(getUploadString());
-                        handler.sendMessageDelayed(getUploadMsg(), 1000);
+                    case MSG_UPLOAD_FAIL:
+                        ToastUtils.show(context, "upload fail!");
                         break;
                     default:
 
@@ -117,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     // TODO waiting for bluetooth
                     s = "100,200";
                     textView.setText(String.format("心率:%s,血氧:%s", s.split(",")[0], s.split(",")[2]));
+                    HttpUtils.uploadData(getUploadString());
 
                 }
             };
@@ -139,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Message getUploadMsg() {
         Message msg = Message.obtain();
-        msg.what = MainActivity.MSG_UPLOAD;
+        msg.what = MainActivity.MSG_UPLOAD_FAIL;
         return msg;
     }
 

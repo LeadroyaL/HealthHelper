@@ -27,10 +27,18 @@ public class ParseUtils {
         return null;
     }
 
-    public static String parseBodies(HealthData.Body[] bodies) {
-        // TODO parse
-        return null;
+
+    public static String b2S(byte[] input) {
+        if (input == null)
+            return "this obj is null";
+        char[] hexArray = "0123456789ABCDEF".toCharArray();
+        char[] tp = new char[input.length * 2];
+        for (int i = 0; i < input.length; i++) {
+            int v = input[i] & 0xFF;
+            tp[i * 2] = hexArray[v >>> 4];
+            tp[i * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(tp);
     }
 
-//    public static String parse
 }
