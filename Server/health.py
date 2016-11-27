@@ -1,3 +1,4 @@
+import redis
 from flask import Flask
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
@@ -17,7 +18,7 @@ class BodyInDB(db.Model):
     time = db.Column(db.DateTime, default=datetime.now())
     xinlv = db.Column(db.Integer, unique=False)
     xueyang = db.Column(db.Integer, unique=False)
-    deviceID = db.Column(db.DateTime, unique=False)
+    deviceID = db.Column(db.String(64), unique=False)
 
     def __init__(self, xinlv, xueyang, deviceID):
         self.xinlv = xinlv
@@ -28,7 +29,7 @@ class BodyInDB(db.Model):
         return '<id %id>' % self.id
 
     def __str__(self):
-        return 'xl=%d, xy=%d\n' % (self.xinlv, self.xueyang)
+        return 'xl=%d, xy=%d, time=%s\n' % (self.xinlv, self.xueyang, self.time)
 
 
 def check_exists(needed, args):
@@ -57,19 +58,7 @@ def pkcs5_unpad(data):
 
 @app.route('/')
 def hello_world():
-    # AES/CBC/PKCS5Padding
-    aes_key = urandom(32)
-    cipher = AES.AESCipher(aes_key, AES.MODE_CBC, iv)
-    plain = pkcs5_pad("hello world!".encode())
-    # print(plain)
-    enc = cipher.encrypt(plain)
-    # print(enc)
-    cipher = AES.AESCipher(aes_key, AES.MODE_CBC, iv)
-    dec = cipher.decrypt(enc)
-    # print(dec)
-    plain = pkcs5_unpad(dec)
-    # print(plain)
-    return plain
+    return "Welcome to homepage!"
 
 
 @app.route('/getToken', methods=['GET'])
@@ -84,9 +73,8 @@ def get_token():
         return 'No device ID', 400
     device_id = request.args['deviceID']
     rand_key = urandom(32)
-    # import redis
-    # r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    # r.set(device_id, rand_key)
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    r.set(device_id, rand_key)
     return rand_key
 
 
@@ -105,9 +93,10 @@ def upload_data():
     device_id = request.form['deviceID']
     data = request.form['data']
     enc_data = bytes.fromhex(data)
-    import redis
     r = redis.StrictRedis(host='localhost', port=6379, db=0)
     aes_key = r.get(device_id)
+    if aes_key is None:
+        return 'No passwd for you, please restart', 400
     cipher = AES.AESCipher(aes_key, AES.MODE_CBC, iv)
     dec = cipher.decrypt(enc_data)
     plain = pkcs5_unpad(dec)
@@ -122,8 +111,11 @@ def upload_data():
 
 @app.route('/show', methods=['POST'])
 def get_data_by_client():
+    """
     # 1. query
     # 2. return template
+    :return:
+    """
     needed_args = ['deviceID']
     if not check_exists(needed_args, request.form):
         return 'No device ID', 400
@@ -131,20 +123,23 @@ def get_data_by_client():
     bodies = BodyInDB.query.filter_by(deviceID=device_id).all()
     res = device_id + '\n'
     for body in bodies:
-        res += body
+        res += str(body)
     return res
 
 
 @app.route('/showAll')
 def get_all_data():
+    """
     # 1. select
     # 2. show
+    :return:
+    """
     res = ""
     bodies = BodyInDB.query.all()
     for body in bodies:
-        res += body
+        res += str(body)
     return res
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
