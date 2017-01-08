@@ -37,12 +37,12 @@ public class CryptoUtils {
 
     public static void setAESKey(byte[] bytes) {
         AESKey = new SecretKeySpec(bytes, "AES");
-        try {
-            encryptCipher.init(Cipher.ENCRYPT_MODE, AESKey, iv);
-            decryptCipher.init(Cipher.DECRYPT_MODE, AESKey, iv);
-        } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            encryptCipher.init(Cipher.ENCRYPT_MODE, AESKey, iv);
+//            decryptCipher.init(Cipher.DECRYPT_MODE, AESKey, iv);
+//        } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static byte[] AESEnc(String plain) {
@@ -50,9 +50,15 @@ public class CryptoUtils {
     }
 
     public static byte[] AESEnc(byte[] plain) {
+        if (AESKey == null)
+            return null;
         try {
+            encryptCipher.init(Cipher.ENCRYPT_MODE, AESKey, iv);
             return encryptCipher.doFinal(plain);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidAlgorithmParameterException | InvalidKeyException e) {
             e.printStackTrace();
             return null;
         }
@@ -63,9 +69,15 @@ public class CryptoUtils {
     }
 
     public static byte[] AESDec(byte[] plain) {
+        if (AESKey == null)
+            return null;
         try {
+            decryptCipher.init(Cipher.DECRYPT_MODE, AESKey, iv);
             return decryptCipher.doFinal(plain);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidAlgorithmParameterException | InvalidKeyException e) {
             e.printStackTrace();
             return null;
         }

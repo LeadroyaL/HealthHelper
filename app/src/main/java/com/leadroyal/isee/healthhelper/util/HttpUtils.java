@@ -11,6 +11,7 @@ import com.leadroyal.isee.healthhelper.proto.HealthData;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -22,7 +23,7 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class HttpUtils {
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private static AsyncHttpClient client = new AsyncHttpClient(5000);
 
     public static void getKey(String bluetoothMAC) {
         RequestParams params = new RequestParams("deviceID", bluetoothMAC);
@@ -45,6 +46,7 @@ public class HttpUtils {
     }
 
     public static void uploadData(String uploadString) {
+        SyncHttpClient client = new SyncHttpClient(5000);
         String xinlv = uploadString.split(" ")[0];
         String xueyang = uploadString.split(" ")[1];
         String bluetoothMAC = BluetoothAdapter.getDefaultAdapter().getAddress();
@@ -55,7 +57,7 @@ public class HttpUtils {
         params.add("deviceID", bluetoothMAC);
         byte[] enc = CryptoUtils.AESEnc(bytes);
         params.add("data", ParseUtils.b2S(enc));
-        client.post("http://http://123.206.214.19/uploadData", params, new AsyncHttpResponseHandler() {
+        client.post("http://123.206.214.19/uploadData", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Message msg = Message.obtain();

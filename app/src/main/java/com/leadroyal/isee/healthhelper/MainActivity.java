@@ -21,6 +21,8 @@ import com.leadroyal.isee.healthhelper.util.ToastUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public InputStream inputStream;
     public OutputStream outputStream;
     private String uploadString;
+    private Timer timer;
+    private TimerTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,27 +99,23 @@ public class MainActivity extends AppCompatActivity {
                 ToastUtils.show(this, "IO error");
                 return false;
             }
-            AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+        } else {
+            timer = new Timer(true);
+            task = new TimerTask() {
                 @Override
-                protected String doInBackground(Void... params) {
-                    try {
-                        return ParseUtils.read(inputStream);
-                    } catch (IOException e) {
-                        return null;
-                    }
-                }
-
-                @Override
-                protected void onPostExecute(String s) {
-                    if (s == null)
-                        return;
-                    // TODO waiting for bluetooth
-                    s = "100,200";
-                    textView.setText(String.format("心率:%s,血氧:%s", s.split(",")[0], s.split(",")[2]));
+                public void run() {
+                    String s = "100,200";
+                    Log.d("BLE", s);
+                    textView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.setText(String.format("心率:%s,血氧:%s", 123, 123));
+                        }
+                    });
                     HttpUtils.uploadData(getUploadString());
-
                 }
             };
+            timer.schedule(task, 0, 1000);
         }
         return true;
     }
@@ -147,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     public String getUploadString() {
         String s = textView.getText().toString();
-        return s.split(":")[1] + " " + s.split(":")[3];
+        String p = "123,123";
+//        return s.split(":")[1].replace(",","") + " " + s.split(":")[2];
+        return "123 123";
     }
 }
